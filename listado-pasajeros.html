@@ -144,18 +144,18 @@
                 let servicio = $('#servicio').val();
                 let responsable = $('#responsable').val();
 
-                var detallesViaje = '<div class="card mb-3">';
-                        detallesViaje += '<div class="card-body">';
+               // var detallesViaje = '<div class="card mb-3">';
+               //         detallesViaje += '<div class="card-body">';
                        // detallesViaje += '<h5 class="card-title">Detalles del viaje</h5>';
-                        detallesViaje +='<img src="https://araucania.wit.la/control-equipaje/assets/andesmar.jpg" alt="">'
+                 var    detallesViaje ='<img src="https://araucania.wit.la/control-equipaje/assets/andesmar.jpg" alt="">'
                         detallesViaje += '<p class="card-text"><strong>Fecha y Hora del Viaje:</strong></p><p>' + fechaHoraViaje + '</p>';
                         detallesViaje += '<p class="card-text"><strong>Origen:</strong> ' + origen + '</p>';
                         detallesViaje += '<p class="card-text"><strong>Destino:</strong> ' + destino + '</p>';
                         detallesViaje += '<p class="card-text"><strong>Patente:</strong> ' + patente + '</p>';
                         detallesViaje += '<p class="card-text"><strong>Servicio:</strong> ' + servicio + '</p>';
                         detallesViaje += '<p class="card-text"><strong>Responsable:</strong> ' + responsable + '</p>';
-                        detallesViaje += '</div>';
-                        detallesViaje += '</div>';
+                  //      detallesViaje += '</div>';
+                  //      detallesViaje += '</div>';
 
                 // Realizamos la consulta a la API
                 $.ajax({
@@ -176,7 +176,7 @@
                             $('#pasajerosCards').text(response.message);
                         } else {
 
-                           // $('#pasajerosCards').append(detallesViaje);
+                            $('#pasajerosCards').append(detallesViaje);
 
                             // Parseamos los datos recibidos y creamos las tarjetas
                             let registros = JSON.parse(response);
@@ -193,7 +193,7 @@
                                 $('#pasajerosCards').append(card);
 
                             });
-                            window.location = 'printerplus://send?text=' + document.getElementById('pasajerosCards').innerHTML;
+                            window.location = 'printerplus://send?text=' + card;
                         }
                     }
                 });
