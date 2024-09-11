@@ -146,14 +146,20 @@
 
                // var detallesViaje = '<div class="card mb-3">';
                //         detallesViaje += '<div class="card-body">';
-                       // detallesViaje += '<h5 class="card-title">Detalles del viaje</h5>';
-                 var    detallesViaje ='<img src="https://araucania.wit.la/control-equipaje/assets/andesmar.jpg" alt="">'
+                    var detallesViaje = '<h6>Detalles del viaje</h6>';
+                        detallesViaje +='<img src="https://araucania.wit.la/control-equipaje/assets/andesmar.jpg" alt="">'
                         detallesViaje += '<p class="card-text"><strong>Fecha y Hora del Viaje:</strong></p><p>' + fechaHoraViaje + '</p>';
                         detallesViaje += '<p class="card-text"><strong>Origen:</strong> ' + origen + '</p>';
                         detallesViaje += '<p class="card-text"><strong>Destino:</strong> ' + destino + '</p>';
                         detallesViaje += '<p class="card-text"><strong>Patente:</strong> ' + patente + '</p>';
                         detallesViaje += '<p class="card-text"><strong>Servicio:</strong> ' + servicio + '</p>';
                         detallesViaje += '<p class="card-text"><strong>Responsable:</strong> ' + responsable + '</p>';
+                        detallesViaje += '<p>----------------------------</p>';
+                        detallesViaje += '<br>';
+                        detallesViaje += '<p>Pasajeros</p>';
+                        detallesViaje += '<br>';
+
+
                   //      detallesViaje += '</div>';
                   //      detallesViaje += '</div>';
 
@@ -188,12 +194,15 @@
                                     <p><strong>Telefono:</strong> (+569) ${registro.telefono}</p>
                                     <p><strong>correo:</strong> ${registro.correo}</p>
                                     <p><strong>Número de Equipaje:</strong> ${registro.equipaje}</p>
-                                    <p><strong>Código de Equipaje:</strong> ${registro.codigo_equipaje}</p>`;
+                                    <p><strong>Código de Equipaje:</strong> ${registro.codigo_equipaje}</p>;
+                                    <p>----------------------------</p>;
+                                    <br>`;
+
 
                                 $('#pasajerosCards').append(card);
 
                             });
-                            window.location = 'printerplus://send?text=' + card;
+                           
                         }
                     }
                 });
