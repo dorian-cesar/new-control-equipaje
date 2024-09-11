@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Listado de Pasajeros</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            background-color: rgb(219, 219, 219);
+            width: 370px;
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+
+        .cards-container {
+            margin-top: 20px;
+        }
+
+        .card {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Filtrar Pasajeros</h2>
+        <div class="form-container">
+            <form id="filterForm">
+                <div class="form-group">
+                    <label for="fechaHoraViaje">Fecha y Hora del Viaje:</label>
+                    <input type="datetime-local" class="form-control" id="fechaHoraViaje" name="fechaHoraViaje"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="origen">Origen:</label>
+                    <select class="form-control" id="origen" name="origen" required>
+                        <option value="">Seleccionar Origen</option>
+                        <!-- Opciones se cargarán dinámicamente -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="destino">Destino:</label>
+                    <select class="form-control" id="destino" name="destino" required>
+                        <option value="">Seleccionar Destino</option>
+                        <!-- Opciones se cargarán dinámicamente -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="patente">Patente:</label>
+                    <select class="form-control" id="patente" name="patente" required>
+                        <option value="">Seleccionar Patente</option>
+                        <!-- Opciones se cargarán dinámicamente -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="servicio">Servicio:</label>
+                    <select class="form-control" id="servicio" name="servicio">
+                        <option value="">Seleccionar Servicio</option>
+                        <!-- Opciones se cargarán dinámicamente -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="responsable">Responsable del Servicio:</label>
+                    <select class="form-control" id="responsable" name="responsable">
+                        <option value="">Seleccionar Responsable</option>
+                        <!-- Opciones se cargarán dinámicamente -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+        </div>
+
+        <div class="cards-container" id="pasajerosCards">
+            <!-- Aquí se mostrarán las tarjetas -->
+        </div>
+
+        <button class="btn btn-secondary" onclick="window.location.href='index.html';">Volver</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Cargar los valores de origen, destino, patente, servicio y responsable de manera dinámica
+            $.ajax({
+                url: 'backend/get_origen_destino_patente_servicio_responsable.php',
+                method: 'GET',
+                success: function (response) {
+
+
+                    // Rellenar el select de origen
+                    let origenes = response.origenes;
+                    origenes.forEach(function (origen) {
+                        $('#origen').append(`<option value="${origen}">${origen}</option>`);
+                    });
+
+                    // Rellenar el select de destino
+                    let destinos = response.destinos;
+                    destinos.forEach(function (destino) {
+                        $('#destino').append(`<option value="${destino}">${destino}</option>`);
+                    });
+
+                    // Rellenar el select de patente
+                    let patentes = response.patentes;
+                    patentes.forEach(function (patente) {
+                        $('#patente').append(`<option value="${patente}">${patente}</option>`);
+                    });
+
+                    // Rellenar el select de servicio
+                    let servicios = response.servicios;
+                    servicios.forEach(function (servicio) {
+                        $('#servicio').append(`<option value="${servicio}">${servicio}</option>`);
+                    });
+
+                    // Rellenar el select de responsable (conductor)
+                    let responsables = response.responsables;
+                    responsables.forEach(function (responsable) {
+                        $('#responsable').append(`<option value="${responsable}">${responsable}</option>`);
+                    });
+                }
+            });
+
+            // Al enviar el formulario, realizamos la búsqueda
+            $('#filterForm').submit(function (event) {
+                event.preventDefault();
+
+                // Capturamos los datos del formulario
+                let fechaHoraViaje = $('#fechaHoraViaje').val();
+                let origen = $('#origen').val();
+                let destino = $('#destino').val();
+                let patente = $('#patente').val();
+                let servicio = $('#servicio').val();
+                let responsable = $('#responsable').val();
+
+                // Realizamos la consulta a la API
+                $.ajax({
+                    url: 'backend/consulta_registros.php',
+                    method: 'POST',
+                    data: {
+                        fechaHoraViaje: fechaHoraViaje,
+                        origen: origen,
+                        destino: destino,
+                        patente: patente,
+                        servicio: servicio,
+                        responsable: responsable
+                    },
+                    success: function (response) {
+                        // Limpiamos el contenedor de tarjetas
+                        $('#pasajerosCards').empty();
+                        if (response.status == "error") {
+                            $('#pasajerosCards').text(response.message);
+                        } else {
+
+                            // Parseamos los datos recibidos y creamos las tarjetas
+                            let registros = JSON.parse(response);
+                            registros.forEach(function (registro) {
+                                let card = `
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">${registro.nombre}</h5>
+                                    <p class="card-text"><strong>RUT:</strong> ${registro.rut}</p>
+                                    <p class="card-text"><strong>Asiento:</strong> ${registro.asiento}</p>
+                                    <p class="card-text"><strong>Número de Equipaje:</strong> ${registro.equipaje}</p>
+                                    <p class="card-text"><strong>Código de Equipaje:</strong> ${registro.codigo_equipaje}</p>
+                                </div>
+                            </div>`;
+                                $('#pasajerosCards').append(card);
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
