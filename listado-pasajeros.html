@@ -182,19 +182,18 @@
                             let registros = JSON.parse(response);
                             registros.forEach(function (registro) {
                                 let card = `
-                            <div class="card">
-                                <div class="card-body">
                                     <h6>${registro.nombre}</h6>
                                     <p><strong>RUT:</strong> ${registro.rut}</p>
                                     <p><strong>Asiento:</strong> ${registro.asiento}</p>
                                     <p><strong>Telefono:</strong> (+569) ${registro.telefono}</p>
                                     <p><strong>correo:</strong> ${registro.correo}</p>
                                     <p><strong>Número de Equipaje:</strong> ${registro.equipaje}</p>
-                                    <p><strong>Código de Equipaje:</strong> ${registro.codigo_equipaje}</p>
-                                </div>
-                            </div>`;
+                                    <p><strong>Código de Equipaje:</strong> ${registro.codigo_equipaje}</p>`;
+
                                 $('#pasajerosCards').append(card);
+
                             });
+                            window.location = 'printerplus://send?text=' + document.getElementById('pasajerosCards').innerHTML;
                         }
                     }
                 });
