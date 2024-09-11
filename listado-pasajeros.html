@@ -176,7 +176,7 @@
                             $('#pasajerosCards').text(response.message);
                         } else {
 
-                            $('#pasajerosCards').append(detallesViaje);
+                           // $('#pasajerosCards').append(detallesViaje);
 
                             // Parseamos los datos recibidos y creamos las tarjetas
                             let registros = JSON.parse(response);
@@ -184,13 +184,13 @@
                                 let card = `
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title">${registro.nombre}</h6>
-                                    <p class="card-text"><strong>RUT:</strong> ${registro.rut}</p>
-                                    <p class="card-text"><strong>Asiento:</strong> ${registro.asiento}</p>
-                                    <p class="card-text"><strong>Telefono:</strong> (+569) ${registro.telefono}</p>
-                                    <p class="card-text"><strong>correo:</strong> ${registro.correo}</p>
-                                    <p class="card-text"><strong>Número de Equipaje:</strong> ${registro.equipaje}</p>
-                                    <p class="card-text"><strong>Código de Equipaje:</strong> ${registro.codigo_equipaje}</p>
+                                    <h6>${registro.nombre}</h6>
+                                    <p><strong>RUT:</strong> ${registro.rut}</p>
+                                    <p><strong>Asiento:</strong> ${registro.asiento}</p>
+                                    <p><strong>Telefono:</strong> (+569) ${registro.telefono}</p>
+                                    <p><strong>correo:</strong> ${registro.correo}</p>
+                                    <p><strong>Número de Equipaje:</strong> ${registro.equipaje}</p>
+                                    <p><strong>Código de Equipaje:</strong> ${registro.codigo_equipaje}</p>
                                 </div>
                             </div>`;
                                 $('#pasajerosCards').append(card);
