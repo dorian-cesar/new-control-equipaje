@@ -8,8 +8,8 @@ $fechaHoraViaje = $_POST['fechaHoraViaje'];
 $origen = $_POST['origen'];
 $destino = $_POST['destino'];
 $patente = $_POST['patente'];
-$servicio = $_POST['servicio'];
-$responsable = $_POST['responsable'];
+//$servicio = $_POST['servicio'];
+//$responsable = $_POST['responsable'];
 
 // Creamos la consulta
 
